@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spiketrade</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='logo2.jpg') }}" alt="Spiketrade Logo" class="logo">
+                <h1>Spiketrade</h1>
+            </div>
+            <p class="subtitle">Real-time buy/sell signals with 1-minute data</p>
+        </header>
+
+        <div class="main-layout">
+            <aside class="sidebar">
+                <div class="card">
+                    <h3>📊 Market Status</h3>
+                    <div id="market-status" class="market-badge market-closed">Market Closed</div>
+                    <p id="market-time" class="market-time">--:-- ET</p>
+                </div>
+
+                <div class="card">
+                    <h3>⚡ Quick Tickers</h3>
+                    <div class="ticker-grid">
+                        <button class="ticker-btn" onclick="loadTicker('MULN')">MULN</button>
+                        <button class="ticker-btn" onclick="loadTicker('SNDL')">SNDL</button>
+                        <button class="ticker-btn" onclick="loadTicker('BBIG')">BBIG</button>
+                        <button class="ticker-btn" onclick="loadTicker('CLOV')">CLOV</button>
+                        <button class="ticker-btn" onclick="loadTicker('SOFI')">SOFI</button>
+                        <button class="ticker-btn" onclick="loadTicker('PLTR')">PLTR</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>⚙️ Strategy Settings</h3>
+                    <div class="setting-row">
+                        <span>Signal Threshold:</span>
+                        <strong>76%</strong>
+                    </div>
+                    <div class="setting-row">
+                        <span>Stop Loss:</span>
+                        <strong>2%</strong>
+                    </div>
+                    <div class="setting-row">
+                        <span>Profit Target:</span>
+                        <strong>2%</strong>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content">
+                <div class="search-section">
+                    <input type="text" id="ticker-input" placeholder="Enter ticker (e.g., AAPL, TSLA)" onkeypress="handleKeyPress(event)">
+                    <button onclick="loadTicker()">Search</button>
+                    <label>
+                        <input type="checkbox" id="auto-refresh"> Auto-Refresh (15s)
+                    </label>
+                </div>
+
+                <div id="loading" class="loading" style="display:none;">Loading data...</div>
+                <div id="error" class="error" style="display:none;"></div>
+                
+                <div id="metrics-section" style="display:none;">
+                    <div class="metrics">
+                        <div class="metric">
+                            <label>Current Price</label>
+                            <p id="current-price">--</p>
+                        </div>
+                        <div class="metric">
+                            <label>Day Change</label>
+                            <p id="day-change">--</p>
+                        </div>
+                        <div class="metric">
+                            <label>RSI</label>
+                            <p id="rsi-value">--</p>
+                        </div>
+                        <div class="metric">
+                            <label>MACD</label>
+                            <p id="macd-value">--</p>
+                        </div>
+                    </div>
+
+                    <div id="chart" style="height: 600px;"></div>
+
+                    <div class="indicators">
+                        <div class="indicator-col">
+                            <h4>Moving Averages</h4>
+                            <p>EMA 9: <span id="ema9">--</span></p>
+                            <p>EMA 20: <span id="ema20">--</span></p>
+                            <p>EMA 50: <span id="ema50">--</span></p>
+                        </div>
+                        <div class="indicator-col">
+                            <h4>MACD</h4>
+                            <p>MACD: <span id="macd">--</span></p>
+                            <p>Signal: <span id="macd-signal">--</span></p>
+                            <p>Histogram: <span id="macd-hist">--</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="welcome-section">
+                    <h2>Welcome to Spiketrade</h2>
+                    <p>Enter a stock ticker to view real-time analysis and trading signals</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
